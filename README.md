@@ -20,9 +20,75 @@ If you are looking forward to using oracle databases with node js for faster dev
  3. Install nodejs modules required for oracle express i.e npm i express oracledb express-oracle-session2 jquery
  
  ## Download oracleDBManager folder from github
- 1. link->
+ 1. link-> https://github.com/winslygeorge/oracleDBManager
  2. Save the folder inside the folder of your project
  
  ### Now you are set and ready to start using oracleDBManager.
+ 
+ ## To use oracleDBManager in the project
+ 1. Set the dbconfig.js file from the oracleDBManager folder to use your credidentials.
+ 2. open your app.js or index.js file.
+ 3. Require dbmanager.js class file from oracleDBManager folder example 
+    -> const dbManager = require('./oracleDBManager/dbmanager') 
+ 4. Instantiate dnManager class example
+    -> const db = new dbManager()
+ 
+ ## Insert operation using dbmanager
+ 
+ To perform insert operation to Oracle Database using oracleDBManager is as simple as 
+ 1. create an object that entails the fieldsname : value, tablename: ¨tablename¨ , operation : insert; example
+ 
+        var student = {
+       
+         FIRST_NAME : "winslow", // fieldname : value
+         LAST_NAME : "george", //fieldname : value
+         COURSE : "Software Development", //fieldname : value
+         operation: "insert", // operation : we are performing an insert operation
+         tablename : "STUDENTS" // tablename : the name of the table
+        }
+
+2. use the db instance to run the query and return the results as simple as this without having to write the code for query and execution e.g
+       
+       db.run(student).then(function (feedback) {
+        // feedback contains the results from the query.
+        if (feedback.code === 200) {
+            
+            res.send("Ok")
+        } else {
+            
+            res.send(feedback.result)
+        }})
+
+ #### Full code for insert
+ 
+      const express = require('express')
+
+      const app = express()
+
+      const port = 3001
+
+      const dbManager = require('./oracleDBManager/dbmanager')
+
+      const db = new dbManager()
+
+      app.get('/', (req, res) =>{ 
+
+      var student = {
+         FIRST_NAME : "winslow",
+         LAST_NAME : "george",
+         COURSE : "Software Development",
+         operation: "insert",
+         tablename : "STUDENTS"
+         }
+       db.run(student).then(function (feedback) {
+        
+           if (feedback.code === 200) {
+            
+           res.send("Ok")
+        } else {
+            
+           res.send(feedback.result)
+        }})})
+       app.listen(port, () => console.log(`Example app listening on port ${port}!`))
  
  
