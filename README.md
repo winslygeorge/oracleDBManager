@@ -91,4 +91,62 @@ If you are looking forward to using oracle databases with node js for faster dev
         }})})
        app.listen(port, () => console.log(`Example app listening on port ${port}!`))
  
+ ## Select operation with oracleDBManager
+ 
+ To perform select operation is a little different from insert operation.
+ 
+ In select operation we don´t put fieldsname and values as ´fieldsname : value ´ as in insert operation insted we introduce a new variable called ´fields´ which will contain an array of the fieldsnames your are targeting and the ´wfield´ contains an array of the where clause fieldsname and the ´wvalue´ contains an array of where clause values .
+ 
+ example code 
+ 
+    var getStudent = {
+     tablename = "students",
+     operation = "select",
+     fields = ["first_name", "last_name", "course"],
+     wfield = ["course"],
+     wvalue = ["Software Development"]
+    }
+
+to perform selection on all record without specification i.e
+select * from *tablename
+
+    var getStudent = {
+     tablename = "students",
+     operation = "select",
+     fields = [],
+    }
+    
+ #### Full code on select 
+ // Feedback.results will return a json of records from the database query.
+  
+      const express = require('express')
+
+      const app = express()
+
+      const port = 3001
+
+      const dbManager = require('./oracleDBManager/dbmanager')
+
+      const db = new dbManager()
+
+      app.get('/', (req, res) =>{ 
+
+      var getStudent = {
+       tablename = "students",
+       operation = "select",
+       fields = ["first_name", "last_name", "course"],
+       wfield = ["course"],
+       wvalue = ["Software Development"]
+      }
+       db.run(getStudent).then(function (feedback) {
+        
+           if (feedback.code === 200) {
+         
+           res.send(feedback.result)
+        } else {
+            
+           res.send(feedback.result)
+        }})})
+       app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+ 
  
