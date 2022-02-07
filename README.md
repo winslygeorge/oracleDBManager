@@ -149,4 +149,31 @@ select * from *tablename
         }})})
        app.listen(port, () => console.log(`Example app listening on port ${port}!`))
  
- 
+### Update for oracleDBManager 
+
+For updating records using oracleDBManager we use fieldsname : value to change value and then we add where and the val to select specific record to update or change. 
+
+example code
+
+      var updateorder = {
+       operation: "update",
+       tablename: "students",
+       course : "Business Management",
+       where: "first_name",
+       val: "winslow",
+      };
+
+### Delete fo oracleDBManagement
+
+For deleting records using oracleDBMnagement we just state the where field as wfield : fieldsname and where value as wvalue : value
+example code 
+
+    var deleteOrder = {
+      tablename: "students",
+      operation: "delete",
+      wfield: "first_name",
+      wvalue: "winslow",
+    };
+    
+### Thank you guys and I hope you find OracleDBManager easy to use 
+#### For any question you can comment on the comment section on my youtube tuitorial or even here...
